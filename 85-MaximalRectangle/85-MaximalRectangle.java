@@ -1,80 +1,34 @@
-// Last updated: 9/16/2025, 9:34:20 AM
+// Last updated: 9/29/2025, 9:45:21 PM
 class Solution {
     public int maximalRectangle(char[][] matrix) {
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return 0;
-        }
-        int r=matrix.length;
-        int c=matrix[0].length;
-        int max=0;
-
-        int arr1[]=new int[c];
-        for(int i=0;i<r;i++){
-            for(int j=0;j<c;j++){
-                if(matrix[i][j]=='1'){
-                    arr1[j]+=1;
-                }
-                else{
-                    arr1[j]=0;
-                }
+        int []arr = new int[matrix[0].length];
+        int ans = 0;
+        for(int i =0;i<matrix.length;i++){
+            for(int j = 0;j < matrix[0].length;j++){
+                if(matrix[i][j] == '0')arr[j] = 0;
+                else arr[j]++;
             }
-            int area=histogram(arr1);
-            max=Math.max(max,area);
+            ans = Math.max(ans, LH(arr));
         }
-        return max;
-        
+        return ans;
+    }
+    
+    public static int LH(int[] heights) {
+    int n = heights.length;
+    int[] h = Arrays.copyOf(heights, n + 1); // Add sentinel
+    Stack<Integer> st = new Stack<>();
+    int maxArea = 0;
+
+    for (int i = 0; i < h.length; i++) {
+        while (!st.isEmpty() && h[i] < h[st.peek()]) {
+            int height = h[st.pop()];
+            int width = st.isEmpty() ? i : i - st.peek() - 1;
+            maxArea = Math.max(maxArea, height * width);
+        }
+        st.push(i);
     }
 
-    int histogram(int[] arr) {
-        int n = arr.length;
-        int[] prev = new int[n]; 
-        int[] next = new int[n]; 
-
-        ArrayDeque<Integer> stack = new ArrayDeque<>();
-
-        for(int i=0;i<n;i++){
-            while(!stack.isEmpty()&& arr[stack.peek()]>=arr[i]){
-                stack.pop();
-            }
-
-            if(stack.isEmpty()){
-                prev[i]=-1;
-            }
-            else{
-
-                prev[i]=stack.peek();
-            }
-            stack.push(i);
-
-        }
-
-        while (!stack.isEmpty()) {
-            stack.pop();
-        }
-        for(int i=n-1;i>=0;i--){
-            while(!stack.isEmpty() && arr[stack.peek()]>=arr[i]){
-                stack.pop();
-            }
-            if(stack.isEmpty()){
-                next[i]=n;
-            }
-            else{
-                next[i]=stack.peek();
-
-            }
-            stack.push(i);
-            
-        }
-        int max=0;
-
-        for(int i=0;i<n;i++){
-            int width=next[i]-prev[i]-1;
-            int area=arr[i]*width;
-            max=Math.max(max,area);
-        }
-
-        return max;
-
-    }
+    return maxArea;
+}
 
 }
