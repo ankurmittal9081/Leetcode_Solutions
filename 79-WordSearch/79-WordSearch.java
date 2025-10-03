@@ -1,48 +1,66 @@
-// Last updated: 10/3/2025, 11:31:14 AM
+// Last updated: 10/3/2025, 11:35:57 AM
 class Solution {
     public boolean exist(char[][] board, String word) {
-        int n=board.length;
-        int m=board[0].length;
-
-        for(int i=0;i<n;i++){
-            for(int j=0;j<m;j++){
-                if(board[i][j]==word.charAt(0)){
-                   boolean ans= solve(board,i,j,n,m,word,0);
-
-                   if(ans) return true;
-                }
+        int m = board.length, n = board[0].length;
+        if (m*n < word.length())
+            return false;
+        char[] wrd = word.toCharArray();
+        int[] boardf = new int[128];
+        for (int i = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                ++boardf[board[i][j]];
+            }
+        }
+        for (char ch : wrd)
+        {
+            if (--boardf[ch] < 0)
+            {
+                return false;
+            }
+        }
+        if (boardf[wrd[0]] > boardf[wrd[wrd.length - 1]])
+            reverse(wrd);
+        for (int i = 0; i < m; ++i)
+        {
+            for (int j = 0; j < n; ++j)
+            {
+                if (wrd[0] == board[i][j]
+                    && found(board, i, j, wrd, new boolean[m][n], 0))
+                    return true;
             }
         }
         return false;
     }
-    public static boolean solve(char arr[][],int cr,int cc,int er,int ec,String word,int i){
-        
 
-        if(i==word.length()) return true;
-        if(cr<0 ||cc<0||cr>=er || cc>=ec || arr[cr][cc]=='#') return false;
-            char ch=word.charAt(i);
-            if(ch==arr[cr][cc]){
-                arr[cr][cc]='#';
-
-                boolean up=solve(arr,cr-1,cc,er,ec,word,i+1);
-                if(up==true) return true;
-                boolean down=solve(arr,cr+1,cc,er,ec,word,i+1);
-                if(down==true) return true;
-                boolean left=solve(arr,cr,cc-1,er,ec,word,i+1);
-                if(left==true) return true;
-                boolean right=solve(arr,cr,cc+1,er,ec,word,i+1);
-                if(right==true) return true;
-                arr[cr][cc]=ch;
-                return false;
-            }
-
-            else{
-                return false;
-            }
-
-
-        // return true;
-            
-        
+    private void reverse(char[] word)
+    {
+        int n = word.length;
+        for (int i = 0; i < n/2; ++i)
+        {
+            char temp = word[i];
+            word[i] = word[n - i - 1];
+            word[n - i - 1] = temp;
+        }
+    }
+    private static final int[] dirs = {0, -1, 0, 1, 0};
+    private boolean found(char[][] board, int row, int col, char[] word,
+                        boolean[][] visited, int index)
+    {
+        if (index == word.length)
+            return true;
+        if (row < 0 || col < 0 || row == board.length || col == board[0].length
+            || board[row][col] != word[index] || visited[row][col])
+            return false;
+        visited[row][col] = true;
+        for (int i = 0; i < 4; ++i)
+        {
+            if (found(board, row + dirs[i], col + dirs[i + 1],
+                word, visited, index + 1))
+                return true;
+        }
+        visited[row][col] = false;
+        return false;
     }
 }
