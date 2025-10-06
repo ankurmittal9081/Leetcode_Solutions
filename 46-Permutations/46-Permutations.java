@@ -1,33 +1,32 @@
-// Last updated: 9/16/2025, 9:34:36 AM
+// Last updated: 10/6/2025, 6:48:29 PM
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-
-        List<List<Integer>> set = new ArrayList<>();
-        permute(nums,0,set);
-        return set;
-        
+        List<List<Integer>>  l=new ArrayList<>();
+        solve(nums,0,l);
+        return l;
     }
-    static void permute(int[] nums,int fi, List<List<Integer>> set){
-        if (fi==nums.length) { 
+    public static void solve(int arr[],int index,List<List<Integer>> l){
+        if(index==arr.length) {
             List<Integer> temp=new ArrayList<>();
-            for(int num:nums) {
+            for(int num:arr){
                 temp.add(num);
             }
-            set.add(new ArrayList<>(temp)); 
-            // set.add(new ArrayList<>(Arrays.stream(nums).boxed().toList()));
 
+            l.add(new ArrayList<>(temp));
             return;
         }
-        for(int i=fi;i<nums.length;i++){
-            swap(nums,i,fi);
-            permute(nums,fi+1,set);
-            swap(nums,i,fi);
+
+        for(int i=index;i<arr.length;i++){
+            swap(arr,i,index);
+            solve(arr,index+1,l);
+            swap(arr,i,index);
         }
     }
-    static void swap(int[] nums,int i,int fi){
+
+    public static void swap(int arr[],int i,int j){
+            int temp=arr[i];
+            arr[i]=arr[j];
+            arr[j]=temp;
         
-    int temp=nums[i];
-    nums[i]=nums[fi];
-    nums[fi]=temp;
     }
 }
