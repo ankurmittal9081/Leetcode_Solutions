@@ -1,4 +1,4 @@
-// Last updated: 10/7/2025, 11:28:12 PM
+// Last updated: 10/7/2025, 11:29:08 PM
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -28,8 +28,8 @@ class Solution {
         
         while(curr!=null){
             if(st.peek().val!=curr.val){
-                System.out.println(curr.val);
-                System.out.println(st.peek().val);
+                // System.out.println(curr.val);
+                // System.out.println(st.peek().val);
                 return false;
             }
             st.remove();
