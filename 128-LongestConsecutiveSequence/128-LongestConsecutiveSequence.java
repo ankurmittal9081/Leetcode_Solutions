@@ -1,28 +1,23 @@
-// Last updated: 10/12/2025, 5:30:48 PM
+// Last updated: 10/12/2025, 5:54:22 PM
 class Solution {
     public int longestConsecutive(int[] nums) {
+        Arrays.sort(nums);
         int n=nums.length;
-        int c=1;
-        int maxi=1;
-        int max=Integer.MIN_VALUE;
-        if(n<1) return 0;
-
-        Set<Integer> set=new TreeSet<>();
-        for(int i:nums) set.add(i);
-
-       for(int i:set){
-        if(max!=Integer.MIN_VALUE && i==max+1){
-            c++;
+        int c=0;
+        if(n==0) return 0;
+        int last=Integer.MIN_VALUE;
+        int max=1;
+        for(int i=0;i<n;i++){
+            if(nums[i]-1==last){
+                c=c+1;
+                last=nums[i];
+            }
+            else if(nums[i]!=last){
+                c=1;
+                last=nums[i];
+            }
+            max=Math.max(max,c);
         }
-        else{
-            c=1;
-        }
-        maxi=Math.max(maxi,c);
-        max=i;
-       }
-       return maxi;
-
-        
-
+        return max;
     }
 }
