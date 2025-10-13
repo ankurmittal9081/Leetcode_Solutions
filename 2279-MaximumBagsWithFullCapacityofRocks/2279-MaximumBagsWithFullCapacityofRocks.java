@@ -1,21 +1,20 @@
-// Last updated: 10/7/2025, 12:09:30 PM
+// Last updated: 10/13/2025, 10:18:54 PM
 class Solution {
     public int maximumBags(int[] capacity, int[] rocks, int k) {
-        ArrayList<Integer> diffArr=new ArrayList<>();
-        for(int i=0;i<capacity.length;i++){
-            int diff=capacity[i]-rocks[i];
-            diffArr.add(diff);
-        }
-        Collections.sort(diffArr);
-        int count=0;
-        for(int i=0;i<diffArr.size();i++){
-            int diff=diffArr.get(i);
-            if(diff<=k){
-                k=k-diff;
-                count++;
-            }
-        }
-        return count;
+        int n = capacity.length;
+        int[] diff = new int[n];
+        for (int i = 0; i < n; i++) diff[i] = capacity[i] - rocks[i];
+        Arrays.sort(diff);
 
+        int full = 0;
+        for (int d : diff) {
+            if (k >= d) 
+            {
+
+                     k -= d;
+            full++;
+            }   
+        }
+        return full;
     }
 }
