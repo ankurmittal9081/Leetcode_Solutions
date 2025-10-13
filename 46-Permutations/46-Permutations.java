@@ -1,32 +1,28 @@
-// Last updated: 10/6/2025, 6:48:29 PM
+// Last updated: 10/13/2025, 9:03:41 PM
 class Solution {
     public List<List<Integer>> permute(int[] nums) {
-        List<List<Integer>>  l=new ArrayList<>();
+        List<List<Integer>>l=new ArrayList<>();
         solve(nums,0,l);
         return l;
-    }
-    public static void solve(int arr[],int index,List<List<Integer>> l){
-        if(index==arr.length) {
-            List<Integer> temp=new ArrayList<>();
-            for(int num:arr){
-                temp.add(num);
-            }
 
-            l.add(new ArrayList<>(temp));
-            return;
-        }
-
-        for(int i=index;i<arr.length;i++){
-            swap(arr,i,index);
-            solve(arr,index+1,l);
-            swap(arr,i,index);
-        }
     }
 
-    public static void swap(int arr[],int i,int j){
-            int temp=arr[i];
-            arr[i]=arr[j];
-            arr[j]=temp;
-        
+    public void solve(int arr[],int idx,List<List<Integer>>l){
+        if(idx==arr.length){
+            List<Integer> ll=new ArrayList<>();
+            for(int i:arr)ll.add(i);
+            l.add(new ArrayList<>(ll));
+            return ;
+        }
+        for(int i=idx;i<arr.length;i++){
+            swap(arr,i,idx);
+            solve(arr,idx+1,l);
+            swap(arr,i,idx);
+        }
+    }
+    public void swap(int arr[],int l,int r){
+        int temp=arr[l];
+        arr[l]=arr[r];
+        arr[r]=temp;
     }
 }
