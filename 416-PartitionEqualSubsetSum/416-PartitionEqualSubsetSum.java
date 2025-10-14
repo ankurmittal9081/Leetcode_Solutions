@@ -1,6 +1,13 @@
-// Last updated: 10/14/2025, 12:19:27 PM
+// Last updated: 10/14/2025, 12:23:10 PM
 class Solution {
-    public boolean canPartition(int[] arr) {
+    static{
+        int arr[]={1,2,3};
+        for(int i=0;i<100;i++){
+            canPartition(arr);
+            
+        }
+    }
+    public static boolean canPartition(int[] arr) {
         int n=arr.length;
         int sum_t=0;
         for(int i:arr)sum_t+=i;
