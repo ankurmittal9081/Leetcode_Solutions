@@ -1,17 +1,16 @@
-// Last updated: 10/8/2025, 11:38:49 AM
+// Last updated: 10/14/2025, 6:07:27 AM
 class Solution {
-    public int partitionArray(int[] arr, int k) {
-        Arrays.sort(arr);
+    public int partitionArray(int[] nums, int k) {
+        Arrays.sort(nums);
+        int n=nums.length;
+        int mid=nums[0];
         int c=0;
-        int min=arr[0];
-        for(int i=0;i<arr.length;i++){
-            int diff=arr[i]-min;
-            if(diff<=k){
-                continue;
-            }
-            else{
+        for(int i:nums){
+            int d=i-mid;
+            if(d<=k) continue;
+            else {
                 c++;
-                min=arr[i];
+                mid=i;
             }
         }
         return c+1;
