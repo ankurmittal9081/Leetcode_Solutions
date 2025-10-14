@@ -1,4 +1,4 @@
-// Last updated: 9/16/2025, 9:33:05 AM
+// Last updated: 10/14/2025, 7:26:06 AM
 class Solution {
     public String frequencySort(String s) {
 
@@ -7,16 +7,21 @@ class Solution {
             map.put(w,map.getOrDefault(w,0)+1);
         }
 
-        PriorityQueue<Map.Entry<Character, Integer>> pq=new PriorityQueue
-        <>((a, b) -> b.getValue() - a.getValue());
+        ArrayList<Character>l=new ArrayList<>();
 
-        pq.addAll(map.entrySet());
+         for(Map.Entry<Character,Integer>mp:map.entrySet())
+        {
+            l.add(mp.getKey());
+        }
+
+        Collections.sort(l,(a,b)->map.get(b)-map.get(a));
 
        StringBuilder sb = new StringBuilder();
-        while (!pq.isEmpty()) {
-            Map.Entry<Character, Integer> entry = pq.poll();
-            for (int i = 0; i < entry.getValue(); i++) {
-                sb.append(entry.getKey());
+        for(char i:l){
+            int j=map.get(i);
+
+            while(j--!=0){
+                sb.append(i);
             }
         }
 
